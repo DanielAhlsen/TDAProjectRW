@@ -9,11 +9,11 @@ import networkx as nx
 URW = URW()
 GRW = GRW()
 num = 1
-length = 10000
-list_URW = Sample(URW,length,num)
+length = 100
+#list_URW = Sample(URW,length,num)
 list_GRW = Sample(GRW,length,num)
 
-plt.plot(list_URW[0,:,0], list_URW[0,:,1])
+#plt.plot(list_URW[0,:,0], list_URW[0,:,1])
 plt.plot(list_GRW[0,:,0], list_GRW[0,:,1], color='red')
 plt.show()
 """

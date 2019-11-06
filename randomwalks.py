@@ -1,5 +1,6 @@
 import numpy as np
 from numpy.random import randint
+from numpy.random import choice
 import networkx as nx
 
 class RandomWalk:
@@ -22,10 +23,6 @@ class RandomWalk:
     def clear(self, init=(0,0)):
         self.__init__(init)
         
-    def getStep(self,x=(0,0)):
-        i, j = randint(2, size=2)
-        return (x[0] + (-1)**j * ((i+1) % 2) , x[1] + (-1)**j * (i % 2))
-        
 class UniformRandomWalk(RandomWalk):
     """
     UniformRandomWalk
@@ -35,6 +32,10 @@ class UniformRandomWalk(RandomWalk):
     def takeStep(self):
         next_step = self.getStep(self.current)
         super().takeStep(next_step)
+        
+    def getStep(self,x):
+        i, j = randint(2, size=2)
+        return (x[0] + (-1)**j * ((i+1) % 2) , x[1] + (-1)**j * (i % 2))
 
 class GreedyRandomWalk(RandomWalk):
     """
@@ -43,14 +44,21 @@ class GreedyRandomWalk(RandomWalk):
     A Greedy Random Walk in 2D.
     """  
     def takeStep(self):
+        next_step = self.getStep(self.current)
+        super().takeStep(next_step)
+
+    def getStep(self,x):
+        available = [ (x[0]+1,x[1]),(x[0]-1,x[1]),(x[0],x[1]+1),(x[0],x[1]-1)]
+        possible = []
+        
         graph_edges = self.graph.edges()
-        while True:
-            next_step = self.getStep(self.current)
-            edge = (self.current, next_step)
-            edge_rev = (next_step, self.current)
-            if not (edge in graph_edges or edge_rev in graph_edges):
-                super().takeStep(next_step)
-                break
+        for move in available:
+            if not ((move,x) in graph_edges or (x,move) in graph_edges):
+                possible.append(move)
+        if len(possible) > 0:
+            return possible[choice(len(possible))]
+        else:
+            return available[choice(4)]
 
 def DistanceMatrix(RandomWalk):     
     G = RandomWalk.graph

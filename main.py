@@ -6,17 +6,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
 
-RW = GRW()
-num = 3
-length = 5000
-list = Sample(RW,length,num)
+URW = URW()
+GRW = GRW()
+num = 1
+length = 10000
+list_URW = Sample(URW,length,num)
+list_GRW = Sample(GRW,length,num)
+
+plt.plot(list_URW[0,:,0], list_URW[0,:,1])
+plt.plot(list_GRW[0,:,0], list_GRW[0,:,1], color='red')
+plt.show()
+"""
+dist = np.zeros((num,num))
+for i in range(num):
+    for j in range(num):
+        dist[i,j] = np.sum(abs(list_URW[i,:,:] - list_URW[j,:,:]))/length
 
 dist = np.zeros((num,num))
 for i in range(num):
     for j in range(num):
-        dist[i,j] = np.sum(abs(list[i,:,:] - list[j,:,:]))/length
+        dist[i,j] = np.sum(abs(list_GRW[i,:,:] - list_GRW[j,:,:]))/length
 
-plt.plot(list[0,:,0], list[0,:,1])
-plt.plot(list[1,:,0], list[1,:,1])
-plt.plot(list[2,:,0], list[2,:,1])
-plt.show()
+"""

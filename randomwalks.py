@@ -1,3 +1,4 @@
+# Code based upon what's shamelessly stolen from Daniel :P
 import numpy as np
 from numpy.random import randint
 from numpy.random import choice
